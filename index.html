@@ -1,180 +1,166 @@
-{
-  "name": "Fancode Matches",
-  "total_matches": 51,
-  "live_matches": 7,
-  "upcoming_matches": 44,
-  "matches": [
-    {
-      "category": "Cricket",
-      "title": "Windward Islands Volcanoes Vs Guyana Harpy Eagles",
-      "tournament": "West Indies Championship 2026",
-      "match_id": 141955,
-      "status": "LIVE",
-      "streamingStatus": "STARTED",
-      "startTime": "26 April 2026 07:30 PM",
-      "startDate": "28 April 2026 07:30 PM",
-      "image": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
-      "image_cdn": {
-        "TATAPLAY": "https://images.fancode.com/aig/match/v1/141955_CASACARDS_PARTNER_16_9_1920_1080.png",
-        "APP": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
-        "PLAYBACK": "",
-        "LOGO": "https://www.fancode.com/skillup-uploads/cms-media/West-Indies-Championship,-2025-Tour-Logo.png",
-        "SPORTS": "https://www.fancode.com/skillup-uploads/cms-media/FC_Sports_Default_cricket-old.jpg",
-        "BG_IMAGE": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
-        "SPORT_BY_IMAGE": "https://www.fancode.com/skillup-uploads/cms-media/WI-old-sporty.jpg",
-        "CLOUDFARE": "https://d229kpbsb5jevy.cloudfront.net/vffancode2/aig/match/v1/141955_CASACARDS_PARTNER_16_9_1920_1080.png"
-      },
-      "team": [
-        {
-          "name": "Windward Islands Volcanoes",
-          "shortName": "WIS",
-          "flag": {
-            "src": "https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-VOLC@2x.png"
-          },
-          "isWinner": false,
-          "color": "#9a9100",
-          "cricketScore": null,
-          "kabaddiScore": null,
-          "footballScore": null,
-          "basketBallScore": null,
-          "hockeyScore": null,
-          "status": {
-            "cricket": {
-              "isBatting": false
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://drmlive.in/sports/fancode.png" />
+<title>Fancode Live Matches</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap">
+
+<style>
+/* ✅ YOUR ORIGINAL DESIGN (UNCHANGED) */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #000;
+    color: #fff;
+}
+.file-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.match-item {
+    margin: 10px;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #1a1a1a;
+    padding: 20px;
+    width: calc(25% - 20px);
+}
+.match-item img {
+    max-width: 100%;
+}
+.match-item h3 { margin-bottom: 10px; }
+.match-item p { margin-bottom: 10px; }
+
+.watch-btn {
+    padding:10px;
+    background:red;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1 style="text-align:center;">FANCODE LIVE</h1>
+<div class="file-container" id="matches"></div>
+
+<script>
+const playerURL = 'player.html?url=';
+const apiURL = 'YOUR_JSON_URL_HERE'; // 👈 put your JSON
+
+fetch(apiURL)
+.then(res => res.json())
+.then(data => {
+
+    const container = document.getElementById('matches');
+
+    data.matches.forEach(match => {
+
+        const card = document.createElement('div');
+        card.className = 'match-item';
+
+        const team1 = match.team?.[0]?.shortName || '';
+        const team2 = match.team?.[1]?.shortName || '';
+
+        card.innerHTML = `
+            <img src="${match.image}">
+            <h3>${match.tournament}</h3>
+            <p>${team1} vs ${team2}</p>
+            <p>${match.status}</p>
+            <button class="watch-btn">Watch Now</button>
+        `;
+
+        // 🔥 WATCH BUTTON CLICK
+        card.querySelector('.watch-btn').onclick = () => {
+
+            const auto = match.auto_streams?.[0]?.auto;
+
+            if (!auto) {
+                alert("No streams available");
+                return;
             }
-          }
-        },
-        {
-          "name": "Guyana Harpy Eagles",
-          "shortName": "GUY",
-          "flag": {
-            "src": "https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-HARP@2x.png"
-          },
-          "isWinner": false,
-          "color": "#d3b016",
-          "cricketScore": null,
-          "kabaddiScore": null,
-          "footballScore": null,
-          "basketBallScore": null,
-          "hockeyScore": null,
-          "status": {
-            "cricket": {
-              "isBatting": false
+
+            const lines = auto.split('\n');
+            let streams = [];
+
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].includes('RESOLUTION')) {
+
+                    const resMatch = lines[i].match(/RESOLUTION=\d+x(\d+)/);
+                    const quality = resMatch ? resMatch[1] + "p" : "Auto";
+                    const url = lines[i + 1];
+
+                    streams.push({ quality, url });
+                }
             }
-          }
-        }
-      ],
-      "language": "ENGLISH",
-      "STREAMING_CDN": {
-        "Primary_Playback_URL": "https://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8",
-        "is_drm": false,
-        "fancode_cdn": "https://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8",
-        "fancode_bd_cdn": "https://bd-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8",
-        "fancode_np_cdn": "https://np-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8",
-        "dai_google_cdn": "Unavailable",
-        "cloudfront_cdn": "Unavailable",
-        "sony_cdn": "Unavailable",
-        "language": "ENGLISH",
-        "backup": {
-          "fancode_cdn": "https://in-mc-fblive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8",
-          "fancode_dai_cdn": "https://dai-partner.fancode.com/primary/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8"
-        }
-      },
-      "auto_streams": [
-        {
-          "auto": "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=446936,AVERAGE-BANDWIDTH=446936,CODECS=\"avc1.42e015,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=426x240,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/240p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC\n#EXT-X-STREAM-INF:BANDWIDTH=702376,AVERAGE-BANDWIDTH=702376,CODECS=\"avc1.42e01e,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=640x360,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/360p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC\n#EXT-X-STREAM-INF:BANDWIDTH=1023224,AVERAGE-BANDWIDTH=1023224,CODECS=\"avc1.4d401e,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=854x480,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/480p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC\n#EXT-X-STREAM-INF:BANDWIDTH=1278664,AVERAGE-BANDWIDTH=1278664,CODECS=\"avc1.4d401f,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=960x540,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/540p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC\n#EXT-X-STREAM-INF:BANDWIDTH=1789512,AVERAGE-BANDWIDTH=1789512,CODECS=\"avc1.64001f,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=1280x720,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/720p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC\n#EXT-X-STREAM-INF:BANDWIDTH=3322120,AVERAGE-BANDWIDTH=3322120,CODECS=\"avc1.640028,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=1920x1080,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/1080p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC",
-          "cookie": "hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC",
-          "cookie_valid": "1777399084",
-          "create_date": "Monday, April 27, 2026, 11:28:02 PM",
-          "expire_date": "Tuesday, April 28, 2026, 11:28:04 PM",
-          "language": "ENGLISH"
-        }
-      ]
-    },
-    {
-      "category": "Cricket",
-      "title": "Leeward Islands Hurricanes Vs Trinidad & Tobago Red Force",
-      "tournament": "West Indies Championship 2026",
-      "match_id": 141953,
-      "status": "LIVE",
-      "streamingStatus": "STARTED",
-      "startTime": "26 April 2026 07:30 PM",
-      "startDate": "28 April 2026 07:30 PM",
-      "image": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
-      "image_cdn": {
-        "TATAPLAY": "https://images.fancode.com/aig/match/v1/141953_CASACARDS_PARTNER_16_9_1920_1080.png",
-        "APP": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
-        "PLAYBACK": "",
-        "LOGO": "https://www.fancode.com/skillup-uploads/cms-media/West-Indies-Championship,-2025-Tour-Logo.png",
-        "SPORTS": "https://www.fancode.com/skillup-uploads/cms-media/FC_Sports_Default_cricket-old.jpg",
-        "BG_IMAGE": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
-        "SPORT_BY_IMAGE": "https://www.fancode.com/skillup-uploads/cms-media/WI-old-sporty.jpg",
-        "CLOUDFARE": "https://d229kpbsb5jevy.cloudfront.net/vffancode2/aig/match/v1/141953_CASACARDS_PARTNER_16_9_1920_1080.png"
-      },
-      "team": [
-        {
-          "name": "Leeward Islands Hurricanes",
-          "shortName": "LEI",
-          "flag": {
-            "src": "https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-HURR@2x.png"
-          },
-          "isWinner": false,
-          "color": "#1c75b8",
-          "cricketScore": null,
-          "kabaddiScore": null,
-          "footballScore": null,
-          "basketBallScore": null,
-          "hockeyScore": null,
-          "status": {
-            "cricket": {
-              "isBatting": false
-            }
-          }
-        },
-        {
-          "name": "Trinidad & Tobago Red Force",
-          "shortName": "TNT",
-          "flag": {
-            "src": "https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-RFRC@2x.png"
-          },
-          "isWinner": false,
-          "color": "#a1090f",
-          "cricketScore": null,
-          "kabaddiScore": null,
-          "footballScore": null,
-          "basketBallScore": null,
-          "hockeyScore": null,
-          "status": {
-            "cricket": {
-              "isBatting": false
-            }
-          }
-        }
-      ],
-      "language": "ENGLISH",
-      "STREAMING_CDN": {
-        "Primary_Playback_URL": "https://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8",
-        "is_drm": false,
-        "fancode_cdn": "https://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8",
-        "fancode_bd_cdn": "https://bd-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8",
-        "fancode_np_cdn": "https://np-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8",
-        "dai_google_cdn": "Unavailable",
-        "cloudfront_cdn": "Unavailable",
-        "sony_cdn": "Unavailable",
-        "language": "ENGLISH",
-        "backup": {
-          "fancode_cdn": "https://in-mc-fblive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8",
-          "fancode_dai_cdn": "https://dai-partner.fancode.com/primary/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8"
-        }
-      },
-      "auto_streams": [
-        {
-          "auto": "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=446936,AVERAGE-BANDWIDTH=446936,CODECS=\"avc1.42e015,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=426x240,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/240p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G\n#EXT-X-STREAM-INF:BANDWIDTH=702376,AVERAGE-BANDWIDTH=702376,CODECS=\"avc1.42e01e,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=640x360,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/360p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G\n#EXT-X-STREAM-INF:BANDWIDTH=1023224,AVERAGE-BANDWIDTH=1023224,CODECS=\"avc1.4d401e,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=854x480,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/480p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G\n#EXT-X-STREAM-INF:BANDWIDTH=1278664,AVERAGE-BANDWIDTH=1278664,CODECS=\"avc1.4d401f,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=960x540,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/540p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G\n#EXT-X-STREAM-INF:BANDWIDTH=1789512,AVERAGE-BANDWIDTH=1789512,CODECS=\"avc1.64001f,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=1280x720,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/720p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G\n#EXT-X-STREAM-INF:BANDWIDTH=3322120,AVERAGE-BANDWIDTH=3322120,CODECS=\"avc1.640028,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=1920x1080,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/1080p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G",
-          "cookie": "hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G",
-          "cookie_valid": "1777399086",
-          "create_date": "Monday, April 27, 2026, 11:28:04 PM",
-          "expire_date": "Tuesday, April 28, 2026, 11:28:06 PM",
-          "language": "ENGLISH"
-        }
-      ]
-    },
+
+            // 🔥 POPUP
+            let popup = document.createElement('div');
+            popup.style = `
+                position:fixed;
+                top:0;
+                left:0;
+                width:100%;
+                height:100%;
+                background:rgba(0,0,0,0.8);
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                z-index:9999;
+            `;
+
+            let box = document.createElement('div');
+            box.style = `
+                background:#111;
+                padding:20px;
+                border-radius:10px;
+                text-align:center;
+            `;
+
+            streams.forEach(s => {
+                let btn = document.createElement('button');
+                btn.innerText = s.quality;
+                btn.style = `
+                    margin:5px;
+                    padding:10px;
+                    background:red;
+                    color:white;
+                    border:none;
+                    cursor:pointer;
+                `;
+
+                btn.onclick = () => {
+                    window.location.href = playerURL + encodeURIComponent(s.url);
+                };
+
+                box.appendChild(btn);
+            });
+
+            let close = document.createElement('button');
+            close.innerText = "Close";
+            close.style = "display:block;margin-top:10px;";
+            close.onclick = () => popup.remove();
+
+            box.appendChild(close);
+            popup.appendChild(box);
+            document.body.appendChild(popup);
+        };
+
+        container.appendChild(card);
+    });
+
+})
+.catch(err => console.error(err));
+</script>
+
+</body>
+</html>
