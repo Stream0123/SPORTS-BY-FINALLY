@@ -55,8 +55,8 @@ video {
 <body>
 
 <div class="video-container">
-  <div class="shaka-video-container" data-shaka-player-container>
-    <video id="video" autoplay playsinline preload="auto"></video>
+  <div class="shaka-video-container" data-shaka-player data-shaka-player-container>
+    <video id="video" autoplay playsinline preload="auto" class="shaka-video"></video>
   </div>
 </div>
 
@@ -75,6 +75,7 @@ const video = document.getElementById('video');
 
 async function initializePlayer() {
   try {
+    // Initialize Shaka Player
     player = new shaka.Player();
     await player.attach(video);
 
@@ -92,25 +93,47 @@ async function initializePlayer() {
 
     ui.configure(config);
 
+    // Performance config (same as your logic)
     player.configure({
       streaming: {
         bufferingGoal: 10,
         rebufferingGoal: 2,
         bufferBehind: 30
+      },
+      manifest: {
+        retryParameters: {
+          timeout: 30000,
+          maxAttempts: 2,
+          baseDelay: 1000,
+          backoffFactor: 2,
+          fuzzFactor: 0.5
+        }
       }
     });
 
     video.autoplay = true;
     video.controls = false;
+    video.volume = 1;
+    video.muted = false;
+    video.preload = 'auto';
 
+    console.log(`Loading stream: ${channelstreamInfo.streamUrl}`);
+
+    // Load stream
     await player.load(channelstreamInfo.streamUrl);
+
+    console.log('Stream loaded successfully.');
 
     const attemptAutoplay = async () => {
       try {
         await video.play();
-      } catch {
+      } catch (playError) {
         video.muted = true;
-        await video.play();
+        try {
+          await video.play();
+        } catch (mutedError) {
+          console.log('User interaction required');
+        }
       }
     };
 
@@ -121,8 +144,13 @@ async function initializePlayer() {
     }
 
   } catch (error) {
+    console.error('Error initializing player:', error);
+
+    // Fallback (same logic)
     video.src = channelstreamInfo.streamUrl;
     video.autoplay = true;
+    video.muted = false;
+
     try {
       await video.play();
     } catch {
@@ -132,6 +160,7 @@ async function initializePlayer() {
   }
 }
 
+// Init
 document.addEventListener('DOMContentLoaded', () => {
   initializePlayer();
 });
