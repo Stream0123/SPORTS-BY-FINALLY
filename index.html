@@ -1,376 +1,180 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="shortcut icon" href="https://drmlive.in/sports/fancode.png" />
-    <title>Fancode Live Matches</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #000;
-            color: #fff;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .file-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            padding: 10px;
-        }
-        .match-item {
-            margin: 10px;
-            text-align: center;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform .3s ease, box-shadow .3s ease;
-            background-color: #1a1a1a;
-            padding: 20px;
-            width: calc(25% - 20px); /* Adjusted for desktop screens */
-            box-sizing: border-box;
-            cursor: pointer;
-        }
-        .match-item img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto 10px auto;
-            transition: box-shadow 0.3s ease;
-        }
-        .match-item h3,
-        .match-item p {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            text-transform: uppercase;
-        }
-        .match-item h3 {
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        .match-item p {
-            font-weight: 400;
-            margin-bottom: 15px;
-        }
-        .match-item p:last-of-type {
-            margin-bottom: 0;
-        }
-        .match-item a {
-            text-decoration: none;
-            color: #00bfff;
-            font-weight: 700;
-            display: block;
-            margin-top: 5px;
-            transition: color .3s ease;
-        }
-        .match-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(255, 72, 0, 0.7);
-        }
-        .match-item:hover img {
-            box-shadow: 0 0 15px rgba(255, 72, 0, 0.7);
-        }
-        .match-item a:hover {
-            color: #ff6600;
-        }
-        h1 {
-            text-align: center;
-            color: #ff3700;
-            margin-bottom: 10px;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .telegram-toggle, .theme-toggle, .info-toggle {
-            background-color: #ff3700;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-family: 'Montserrat', sans-serif;
-            transition: opacity 0.3s, transform 0.3s;
-            text-align: center;
-            display: block;
-            margin: 10px auto; /* Center the buttons */
-            width: fit-content;
-            max-width: 100%; /* Make sure the buttons don't overflow on small screens */
-        }
-        .theme-toggle {
-            margin-top: 10px; /* Space between buttons */
-        }
-        .info-toggle {
-            margin-top: 20px; /* Extra space before the info button */
-        }
-        .telegram-toggle.hidden {
-            opacity: 0;
-            transform: translateY(-100%);
-        }
-        .telegram-toggle:hover, .theme-toggle:hover, .info-toggle:hover {
-            background-color: #e62e00;
-        }
-        .status-live {
-            color: red;
-            animation: glow 1s infinite alternate;
-        }
-        @keyframes glow {
-            0% {
-                text-shadow: 0 0 5px red;
+{
+  "name": "Fancode Matches",
+  "total_matches": 51,
+  "live_matches": 7,
+  "upcoming_matches": 44,
+  "matches": [
+    {
+      "category": "Cricket",
+      "title": "Windward Islands Volcanoes Vs Guyana Harpy Eagles",
+      "tournament": "West Indies Championship 2026",
+      "match_id": 141955,
+      "status": "LIVE",
+      "streamingStatus": "STARTED",
+      "startTime": "26 April 2026 07:30 PM",
+      "startDate": "28 April 2026 07:30 PM",
+      "image": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
+      "image_cdn": {
+        "TATAPLAY": "https://images.fancode.com/aig/match/v1/141955_CASACARDS_PARTNER_16_9_1920_1080.png",
+        "APP": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
+        "PLAYBACK": "",
+        "LOGO": "https://www.fancode.com/skillup-uploads/cms-media/West-Indies-Championship,-2025-Tour-Logo.png",
+        "SPORTS": "https://www.fancode.com/skillup-uploads/cms-media/FC_Sports_Default_cricket-old.jpg",
+        "BG_IMAGE": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
+        "SPORT_BY_IMAGE": "https://www.fancode.com/skillup-uploads/cms-media/WI-old-sporty.jpg",
+        "CLOUDFARE": "https://d229kpbsb5jevy.cloudfront.net/vffancode2/aig/match/v1/141955_CASACARDS_PARTNER_16_9_1920_1080.png"
+      },
+      "team": [
+        {
+          "name": "Windward Islands Volcanoes",
+          "shortName": "WIS",
+          "flag": {
+            "src": "https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-VOLC@2x.png"
+          },
+          "isWinner": false,
+          "color": "#9a9100",
+          "cricketScore": null,
+          "kabaddiScore": null,
+          "footballScore": null,
+          "basketBallScore": null,
+          "hockeyScore": null,
+          "status": {
+            "cricket": {
+              "isBatting": false
             }
-            100% {
-                text-shadow: 0 0 15px red;
+          }
+        },
+        {
+          "name": "Guyana Harpy Eagles",
+          "shortName": "GUY",
+          "flag": {
+            "src": "https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-HARP@2x.png"
+          },
+          "isWinner": false,
+          "color": "#d3b016",
+          "cricketScore": null,
+          "kabaddiScore": null,
+          "footballScore": null,
+          "basketBallScore": null,
+          "hockeyScore": null,
+          "status": {
+            "cricket": {
+              "isBatting": false
             }
+          }
         }
-        .status-upcoming {
-            color: #777;
-            opacity: 0.6;
+      ],
+      "language": "ENGLISH",
+      "STREAMING_CDN": {
+        "Primary_Playback_URL": "https://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8",
+        "is_drm": false,
+        "fancode_cdn": "https://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8",
+        "fancode_bd_cdn": "https://bd-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8",
+        "fancode_np_cdn": "https://np-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8",
+        "dai_google_cdn": "Unavailable",
+        "cloudfront_cdn": "Unavailable",
+        "sony_cdn": "Unavailable",
+        "language": "ENGLISH",
+        "backup": {
+          "fancode_cdn": "https://in-mc-fblive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8",
+          "fancode_dai_cdn": "https://dai-partner.fancode.com/primary/141955_english_hls_8a68800a2b61473_1ta-di_h264/index.m3u8"
         }
-        /* Light Mode Styles */
-        .light-mode body {
-background-color: #f0f0f0;
-            color: #000;
+      },
+      "auto_streams": [
+        {
+          "auto": "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=446936,AVERAGE-BANDWIDTH=446936,CODECS=\"avc1.42e015,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=426x240,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/240p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC\n#EXT-X-STREAM-INF:BANDWIDTH=702376,AVERAGE-BANDWIDTH=702376,CODECS=\"avc1.42e01e,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=640x360,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/360p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC\n#EXT-X-STREAM-INF:BANDWIDTH=1023224,AVERAGE-BANDWIDTH=1023224,CODECS=\"avc1.4d401e,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=854x480,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/480p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC\n#EXT-X-STREAM-INF:BANDWIDTH=1278664,AVERAGE-BANDWIDTH=1278664,CODECS=\"avc1.4d401f,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=960x540,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/540p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC\n#EXT-X-STREAM-INF:BANDWIDTH=1789512,AVERAGE-BANDWIDTH=1789512,CODECS=\"avc1.64001f,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=1280x720,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/720p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC\n#EXT-X-STREAM-INF:BANDWIDTH=3322120,AVERAGE-BANDWIDTH=3322120,CODECS=\"avc1.640028,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=1920x1080,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/1080p.m3u8?hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC",
+          "cookie": "hdntl=Expires=1777399084~_GO=Generated~acl=/mumbai/141955_english_hls_8a68800a2b61473_1ta-di_h264/*~Signature=AVFFTBqVSEkMSyneInkuLb4nubqPgbUdZgtIK6KRR52U6o0hsMRaxnjBG4m8W5wPbzCp5B3lPm84ht6RthJjX0Ae40YC",
+          "cookie_valid": "1777399084",
+          "create_date": "Monday, April 27, 2026, 11:28:02 PM",
+          "expire_date": "Tuesday, April 28, 2026, 11:28:04 PM",
+          "language": "ENGLISH"
         }
-        .light-mode .match-item {
-            background-color: #e0e0e0;
-        }
-        .light-mode .match-item h3 {
-            color: #333;
-        }
-        .light-mode .match-item p {
-            color: #333;
-        }
-        .light-mode .status-live {
-            color: #d9534f;
-        }
-        .light-mode .status-upcoming {
-            color: #888;
-        }
-        /* Modal Styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6); /* Black with opacity */
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #333;
-            color: #fff;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-        }
-        .modal-header h2 {
-            margin: 0;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close:hover,
-        .close:focus {
-            color: #fff;
-            text-decoration: none;
-        }
-        /* Responsive Styles */
-        @media (max-width: 1024px) {
-            .match-item {
-                width: calc(33.333% - 20px);
+      ]
+    },
+    {
+      "category": "Cricket",
+      "title": "Leeward Islands Hurricanes Vs Trinidad & Tobago Red Force",
+      "tournament": "West Indies Championship 2026",
+      "match_id": 141953,
+      "status": "LIVE",
+      "streamingStatus": "STARTED",
+      "startTime": "26 April 2026 07:30 PM",
+      "startDate": "28 April 2026 07:30 PM",
+      "image": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
+      "image_cdn": {
+        "TATAPLAY": "https://images.fancode.com/aig/match/v1/141953_CASACARDS_PARTNER_16_9_1920_1080.png",
+        "APP": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
+        "PLAYBACK": "",
+        "LOGO": "https://www.fancode.com/skillup-uploads/cms-media/West-Indies-Championship,-2025-Tour-Logo.png",
+        "SPORTS": "https://www.fancode.com/skillup-uploads/cms-media/FC_Sports_Default_cricket-old.jpg",
+        "BG_IMAGE": "https://www.fancode.com/skillup-uploads/cms-media/WI-Test_web.jpg",
+        "SPORT_BY_IMAGE": "https://www.fancode.com/skillup-uploads/cms-media/WI-old-sporty.jpg",
+        "CLOUDFARE": "https://d229kpbsb5jevy.cloudfront.net/vffancode2/aig/match/v1/141953_CASACARDS_PARTNER_16_9_1920_1080.png"
+      },
+      "team": [
+        {
+          "name": "Leeward Islands Hurricanes",
+          "shortName": "LEI",
+          "flag": {
+            "src": "https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-HURR@2x.png"
+          },
+          "isWinner": false,
+          "color": "#1c75b8",
+          "cricketScore": null,
+          "kabaddiScore": null,
+          "footballScore": null,
+          "basketBallScore": null,
+          "hockeyScore": null,
+          "status": {
+            "cricket": {
+              "isBatting": false
             }
+          }
+        },
+        {
+          "name": "Trinidad & Tobago Red Force",
+          "shortName": "TNT",
+          "flag": {
+            "src": "https://d13ir53smqqeyp.cloudfront.net/flags/cr-flags/FC-RFRC@2x.png"
+          },
+          "isWinner": false,
+          "color": "#a1090f",
+          "cricketScore": null,
+          "kabaddiScore": null,
+          "footballScore": null,
+          "basketBallScore": null,
+          "hockeyScore": null,
+          "status": {
+            "cricket": {
+              "isBatting": false
+            }
+          }
         }
-        @media (max-width: 768px) {
-            .match-item {
-                width: calc(50% - 20px);
-            }
+      ],
+      "language": "ENGLISH",
+      "STREAMING_CDN": {
+        "Primary_Playback_URL": "https://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8",
+        "is_drm": false,
+        "fancode_cdn": "https://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8",
+        "fancode_bd_cdn": "https://bd-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8",
+        "fancode_np_cdn": "https://np-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8",
+        "dai_google_cdn": "Unavailable",
+        "cloudfront_cdn": "Unavailable",
+        "sony_cdn": "Unavailable",
+        "language": "ENGLISH",
+        "backup": {
+          "fancode_cdn": "https://in-mc-fblive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8",
+          "fancode_dai_cdn": "https://dai-partner.fancode.com/primary/141953_english_hls_b2b8a92e164832_1ta-di_h264/index.m3u8"
         }
-        @media (max-width: 480px) {
-            .match-item {
-                width: calc(100% - 20px);
-            }
-            .telegram-toggle, .theme-toggle, .info-toggle {
-                font-size: 14px;
-                padding: 8px 12px;
-            }
+      },
+      "auto_streams": [
+        {
+          "auto": "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:BANDWIDTH=446936,AVERAGE-BANDWIDTH=446936,CODECS=\"avc1.42e015,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=426x240,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/240p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G\n#EXT-X-STREAM-INF:BANDWIDTH=702376,AVERAGE-BANDWIDTH=702376,CODECS=\"avc1.42e01e,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=640x360,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/360p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G\n#EXT-X-STREAM-INF:BANDWIDTH=1023224,AVERAGE-BANDWIDTH=1023224,CODECS=\"avc1.4d401e,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=854x480,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/480p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G\n#EXT-X-STREAM-INF:BANDWIDTH=1278664,AVERAGE-BANDWIDTH=1278664,CODECS=\"avc1.4d401f,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=960x540,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/540p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G\n#EXT-X-STREAM-INF:BANDWIDTH=1789512,AVERAGE-BANDWIDTH=1789512,CODECS=\"avc1.64001f,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=1280x720,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/720p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G\n#EXT-X-STREAM-INF:BANDWIDTH=3322120,AVERAGE-BANDWIDTH=3322120,CODECS=\"avc1.640028,mp4a.40.2\",PROGRAM-ID=1,RESOLUTION=1920x1080,FRAME-RATE=25.000\nhttps://in-mc-plive.fancode.com/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/1080p.m3u8?hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G",
+          "cookie": "hdntl=Expires=1777399086~_GO=Generated~acl=/mumbai/141953_english_hls_b2b8a92e164832_1ta-di_h264/*~Signature=AVFFTBpmZmR5o0Efvc1DBmBOu_TaAUfU-0CrXS1mpLttE1pahf2AZSDA9lHo2aSNFn09KRjaHmVvxeOOSHGevf_bTg4G",
+          "cookie_valid": "1777399086",
+          "create_date": "Monday, April 27, 2026, 11:28:04 PM",
+          "expire_date": "Tuesday, April 28, 2026, 11:28:06 PM",
+          "language": "ENGLISH"
         }
-        .button-container {
-    margin-top: 10px;
-}
-
-.stream-button {
-    padding: 10px 15px;
-    margin-right: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: white;
-}
-
-.dai-button {
-    background-color: #007bff; /* Blue for Dai */
-}
-
-.adfree-button {
-    background-color: #28a745; /* Green for Ad-Free */
-}
-
-    </style>
-</head>
-<body>
-    <h1>FANCODE LIVE</h1>
-    <a href="https://telegram.me/criccoder" class="telegram-toggle">Join Telegram</a>
-    <button id="theme-toggle" class="theme-toggle">Toggle Light Mode</button>
-    <div class="file-container" id="matches"></div>
-    <button id="info-toggle" class="info-toggle">Copyright & Credit [CLICK HERE TO READ]</button>
-
-    <!-- Info Modal -->
-    <div id="infoModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <h2>Important Information</h2>
-            <p>We do not own any material or streams here, All content and streams are provided by third-party sites & Belong To Their Respective Owners.</p>
-
-        <p>API Credit : Toor</p>
-        </div>
-    </div>
-
-    <script>
-const playerURL = 'https://criccoder.pages.dev/p/?url=';
-const apiURL = 'https://raw.githubusercontent.com/doctor-8trange/zyphx8/refs/heads/main/data/fancode.json'; // Replace with your actual API URL
-
-fetch(apiURL)
-    .then(response => response.json())
-    .then(data => {
-        // Create a Set to track displayed match IDs
-        const displayedMatchIds = new Set();
-
-        // Sort matches so that live matches come first
-        data.matches.sort((a, b) => {
-            if (a.status.toLowerCase() === 'live' && b.status.toLowerCase() !== 'live') {
-                return -1;
-            }
-            if (a.status.toLowerCase() !== 'live' && b.status.toLowerCase() === 'live') {
-                return 1;
-            }
-            return 0;
-        });
-      const matchesContainer = document.getElementById('matches');
-        data.matches.forEach(match => {
-            // Check if the match has already been displayed
-            if (!displayedMatchIds.has(match.match_id)) {
-                const matchItem = document.createElement('div');
-                matchItem.className = 'match-item';
-
-                // Determine status and corresponding text
-                const statusText = match.status.toLowerCase() === 'live' ? 'Live' : 'Upcoming';
-                const statusClass = match.status.toLowerCase() === 'live' ? 'status-live' : 'status-upcoming';
-                const startTimeText = match.status.toLowerCase() === 'upcoming' ? <p>${match.startTime}</p> : '';
-
-                // Build the inner HTML with new fields and buttons for streaming
-                matchItem.innerHTML = `
-                    <img src="${match.src}" alt="${match.title}">
-                    <h3>${match.event_name}</h3>
-                    
-                    <p>${match.team_1} vs ${match.team_2}</p>
-                    <p class="${statusClass}">${statusText}</p>
-                    ${startTimeText}
-                    <div class="button-container">
-                        <button class="stream-button dai-button" data-url="${match.dai_url}">Watch Normal</button>
-                        <button class="stream-button adfree-button" data-url="${match.adfree_url}">Watch Ad-Free</button>
-                    </div>
-                `;
-
-                // Event listeners for the stream buttons
-                const daiButton = matchItem.querySelector('.dai-button');
-                const adfreeButton = matchItem.querySelector('.adfree-button');
-
-                daiButton.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Prevent match item click event
-                    window.location.href = `${playerURL}${match.dai_url}`;
-                });
-
-                adfreeButton.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Prevent match item click event
-                    window.location.href = `${playerURL}${match.adfree_url}`;
-                });
-
-                // Event listeners for live and upcoming matches
-                if (match.status.toLowerCase() === 'live') {
-                    matchItem.addEventListener('click', () => {
-                        alert('This match is live. Click the buttons to watch.');
-                    });
-                } else if (match.status.toLowerCase() === 'upcoming') {
-                    matchItem.addEventListener('click', () => {
-                        alert('This match is upcoming.');
-                    });
-                }
-
-                // Append the match item to the container
-                matchesContainer.appendChild(matchItem);
-
-                // Add match_id to the Set to prevent duplicates
-                displayedMatchIds.add(match.match_id);
-            }
-        });
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-    });
-
-let lastScrollTop = 0;
-const telegramButton = document.querySelector('.telegram-toggle');
-
-window.addEventListener('scroll', () => {
-    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (currentScrollTop > lastScrollTop) {
-        telegramButton.classList.add('hidden');
-    } else {
-        telegramButton.classList.remove('hidden');
-    }
-    lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
-});
-
-const themeToggle = document.getElementById('theme-toggle');
-let isDarkMode = true;
-
-themeToggle.addEventListener('click', () => {
-    isDarkMode = !isDarkMode; // Toggle the mode
-    document.body.classList.toggle('light-mode', !isDarkMode);
-    themeToggle.textContent = isDarkMode ? 'Toggle Light Mode' : 'Toggle Dark Mode';
-});
-
-// Info Modal
-const infoToggle = document.getElementById('info-toggle');
-const infoModal = document.getElementById('infoModal');
-const closeModal = document.getElementById('closeModal');
-infoToggle.addEventListener('click', () => {
-    infoModal.style.display = 'flex'; // Show modal
-});
-
-closeModal.addEventListener('click', () => {
-    infoModal.style.display = 'none'; // Hide modal
-});
-
-// Close modal when clicking outside
-window.addEventListener('click', (event) => {
-    if (event.target === infoModal) {
-        infoModal.style.display = 'none';
-    }
-});
-
-</script>
-</body>
-</html>
+      ]
+    },
