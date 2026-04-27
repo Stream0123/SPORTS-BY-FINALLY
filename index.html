@@ -1,244 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="shortcut icon" href="https://drmlive.in/sports/fancode.png" />
-    <title>Fancode Live Matches</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&display=swap">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #000;
-            color: #fff;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .file-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            padding: 10px;
-        }
-        .match-item {
-            margin: 10px;
-            text-align: center;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform .3s ease, box-shadow .3s ease;
-            background-color: #1a1a1a;
-            padding: 20px;
-            width: calc(25% - 20px); /* Adjusted for desktop screens */
-            box-sizing: border-box;
-            cursor: pointer;
-        }
-        .match-item img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto 10px auto;
-            transition: box-shadow 0.3s ease;
-        }
-        .match-item h3,
-        .match-item p {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            text-transform: uppercase;
-        }
-        .match-item h3 {
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        .match-item p {
-            font-weight: 400;
-            margin-bottom: 15px;
-        }
-        .match-item p:last-of-type {
-            margin-bottom: 0;
-        }
-        .match-item a {
-            text-decoration: none;
-            color: #00bfff;
-            font-weight: 700;
-            display: block;
-            margin-top: 5px;
-            transition: color .3s ease;
-        }
-        .match-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(255, 72, 0, 0.7);
-        }
-        .match-item:hover img {
-            box-shadow: 0 0 15px rgba(255, 72, 0, 0.7);
-        }
-        .match-item a:hover {
-            color: #ff6600;
-        }
-        h1 {
-            text-align: center;
-            color: #ff3700;
-            margin-bottom: 10px;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .telegram-toggle, .theme-toggle, .info-toggle {
-            background-color: #ff3700;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-family: 'Montserrat', sans-serif;
-            transition: opacity 0.3s, transform 0.3s;
-            text-align: center;
-            display: block;
-            margin: 10px auto; /* Center the buttons */
-            width: fit-content;
-            max-width: 100%; /* Make sure the buttons don't overflow on small screens */
-        }
-        .theme-toggle {
-            margin-top: 10px; /* Space between buttons */
-        }
-        .info-toggle {
-            margin-top: 20px; /* Extra space before the info button */
-        }
-        .telegram-toggle.hidden {
-            opacity: 0;
-            transform: translateY(-100%);
-        }
-        .telegram-toggle:hover, .theme-toggle:hover, .info-toggle:hover {
-            background-color: #e62e00;
-        }
-        .status-live {
-            color: red;
-            animation: glow 1s infinite alternate;
-        }
-        @keyframes glow {
-            0% {
-                text-shadow: 0 0 5px red;
-            }
-            100% {
-                text-shadow: 0 0 15px red;
-            }
-        }
-        .status-upcoming {
-            color: #777;
-            opacity: 0.6;
-        }
-        /* Light Mode Styles */
-        .light-mode body {
-        background-color: #f0f0f0;
-            color: #000;
-        }
-        .light-mode .match-item {
-            background-color: #e0e0e0;
-        }
-        .light-mode .match-item h3 {
-            color: #333;
-        }
-        .light-mode .match-item p {
-            color: #333;
-        }
-        .light-mode .status-live {
-            color: #d9534f;
-        }
-        .light-mode .status-upcoming {
-            color: #888;
-        }
-        /* Modal Styles */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6); /* Black with opacity */
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #333;
-            color: #fff;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-        }
-        .modal-header h2 {
-            margin: 0;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close:hover,
-        .close:focus {
-            color: #fff;
-            text-decoration: none;
-        }
-        /* Responsive Styles */
-        @media (max-width: 1024px) {
-            .match-item {
-                width: calc(33.333% - 20px);
-            }
-        }
-        @media (max-width: 768px) {
-            .match-item {
-                width: calc(50% - 20px);
-            }
-        }
-        @media (max-width: 480px) {
-            .match-item {
-                width: calc(100% - 20px);
-            }
-            .telegram-toggle, .theme-toggle, .info-toggle {
-                font-size: 14px;
-                padding: 8px 12px;
-            }
-        }
-        .button-container {
-    margin-top: 10px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fancode Live Matches</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 20px;
+    background: #000;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
 }
 
+.file-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.match-item {
+    background: #111;
+    padding: 15px;
+    border-radius: 12px;
+    width: 260px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.match-item:hover {
+    transform: scale(1.03);
+}
+
+.match-item img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* 🔥 WATCH BUTTON */
 .watch-btn {
-    padding: 10px 15px;
-    margin-right: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: white;
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ff3c00, #ff7a00);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
 }
 
-.watch-btn {
-    background-color: #007bff; /* Blue for Dai */
+.watch-btn:hover {
+  transform: scale(1.05);
 }
 
-.watch-btn {
-    background-color: #28a745; /* Green for Ad-Free */
+/* 🔥 POPUP */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-    </style>
-</head>
-<body>
-    <h1>FANCODE LIVE</h1>
-    <a href="https://telegram.me/criccoder" class="telegram-toggle">Join Telegram</a>
+.popup-box {
+  background: #111;
+  padding: 20px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+}
+
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.q-btn {
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #222;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.q-btn:hover {
+  background: #ff3c00;
+}
+
+.q-btn.hd {
+  background: #ff3c00;
+}
+
+.close-btn {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  background: #333;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+}
+</style>
 </head>
 
 <body>
+
+<h2 style="text-align:center;">FANCODE LIVE</h2>
 <div class="file-container" id="matches"></div>
 
 <script>
 const playerURL = 'https://fancodebyfinally.pages.dev/fancodeplayer?url=';
-const apiURL = 'https://raw.githubusercontent.com/doctor-8trange/zyphx8/refs/heads/main/data/fancode.json'; // 👈 put your JSON
+const apiURL = 'https://raw.githubusercontent.com/doctor-8trange/zyphx8/refs/heads/main/data/fancode.json'; // replace
 
 fetch(apiURL)
 .then(res => res.json())
@@ -259,10 +144,9 @@ fetch(apiURL)
             <h3>${match.tournament}</h3>
             <p>${team1} vs ${team2}</p>
             <p>${match.status}</p>
-            <button class="watch-btn">Watch Now</button>
+            <button class="watch-btn">▶ Watch Now</button>
         `;
 
-        // 🔥 WATCH BUTTON CLICK
         card.querySelector('.watch-btn').onclick = () => {
 
             const auto = match.auto_streams?.[0]?.auto;
@@ -278,8 +162,8 @@ fetch(apiURL)
             for (let i = 0; i < lines.length; i++) {
                 if (lines[i].includes('RESOLUTION')) {
 
-                    const resMatch = lines[i].match(/RESOLUTION=\d+x(\d+)/);
-                    const quality = resMatch ? resMatch[1] + "p" : "Auto";
+                    const res = lines[i].match(/RESOLUTION=\d+x(\d+)/);
+                    const quality = res ? res[1] + "p" : "Auto";
                     const url = lines[i + 1];
 
                     streams.push({ quality, url });
@@ -288,51 +172,39 @@ fetch(apiURL)
 
             // 🔥 POPUP
             let popup = document.createElement('div');
-            popup.style = `
-                position:fixed;
-                top:0;
-                left:0;
-                width:100%;
-                height:100%;
-                background:rgba(0,0,0,0.8);
-                display:flex;
-                justify-content:center;
-                align-items:center;
-                z-index:9999;
-            `;
+            popup.className = 'popup';
 
             let box = document.createElement('div');
-            box.style = `
-                background:#111;
-                padding:20px;
-                border-radius:10px;
-                text-align:center;
-            `;
+            box.className = 'popup-box';
+
+            box.innerHTML = `<h3>Select Quality</h3>`;
+
+            let grid = document.createElement('div');
+            grid.className = 'quality-grid';
 
             streams.forEach(s => {
                 let btn = document.createElement('button');
+                btn.className = 'q-btn';
+
+                if (s.quality.includes("720") || s.quality.includes("1080")) {
+                    btn.classList.add('hd');
+                }
+
                 btn.innerText = s.quality;
-                btn.style = `
-                    margin:5px;
-                    padding:10px;
-                    background:red;
-                    color:white;
-                    border:none;
-                    cursor:pointer;
-                `;
 
                 btn.onclick = () => {
                     window.location.href = playerURL + encodeURIComponent(s.url);
                 };
 
-                box.appendChild(btn);
+                grid.appendChild(btn);
             });
 
             let close = document.createElement('button');
+            close.className = 'close-btn';
             close.innerText = "Close";
-            close.style = "display:block;margin-top:10px;";
             close.onclick = () => popup.remove();
 
+            box.appendChild(grid);
             box.appendChild(close);
             popup.appendChild(box);
             document.body.appendChild(popup);
@@ -341,8 +213,7 @@ fetch(apiURL)
         container.appendChild(card);
     });
 
-})
-.catch(err => console.error(err));
+});
 </script>
 
 </body>
