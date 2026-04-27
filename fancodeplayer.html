@@ -82,34 +82,48 @@ async function initializePlayer() {
     const container = document.querySelector('.shaka-video-container');
     const ui = new shaka.ui.Overlay(player, container, video);
 
-    const config = {
-      controlPanelElements: [
-        'play_pause',
-        'time_and_duration',
-        'spacer',
-        'fullscreen'
-      ]
-    };
+    const config={
 
-    ui.configure(config);
+addSeekBar:false,
 
-    // Performance config (same as your logic)
-    player.configure({
-      streaming: {
-        bufferingGoal: 10,
-        rebufferingGoal: 2,
-        bufferBehind: 30
-      },
-      manifest: {
-        retryParameters: {
-          timeout: 30000,
-          maxAttempts: 2,
-          baseDelay: 1000,
-          backoffFactor: 2,
-          fuzzFactor: 0.5
-        }
-      }
-    });
+controlPanelElements:[
+'play_pause',
+'mute',
+'time_and_duration',
+'restart',
+'spacer',
+'picture_in_picture',
+'fullscreen'
+]
+
+};
+
+ui.configure(config);
+
+
+/* PLAYER CONFIG */
+
+player.configure({
+
+streaming:{
+bufferingGoal:10,
+rebufferingGoal:2,
+bufferBehind:30
+},
+
+manifest:{
+retryParameters:{
+timeout:30000,
+maxAttempts:2,
+baseDelay:1000,
+backoffFactor:2,
+fuzzFactor:0.5
+}
+
+}
+
+});
+
 
     video.autoplay = true;
     video.controls = false;
