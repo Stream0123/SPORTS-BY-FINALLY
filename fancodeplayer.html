@@ -2,9 +2,8 @@
 <html>
 
 <head>
-
 <meta charset="UTF-8">
-<title>Famcode</title>
+<title>@Finally_Live_Streaming</title>
 
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -13,27 +12,48 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/controls.min.css">
 
 <style>
-
-body{
-margin:0;
-background:#000;
-height:100%;
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+  width:100%;
+  background:#000;
+  overflow:hidden; /* 🚫 no scroll */
 }
 
-html{
-height:100%;
+.video-container {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
 }
 
-.shaka-video-container{
-width:100%;
-height:100%;
+.shaka-video-container {
+  width:100%;
+  height:100%;
 }
 
-video{
-width:100%;
-height:100%;
+video {
+  width:100%;
+  height:100%;
+  object-fit:cover; /* 📺 full fit */
 }
 
+/* 🔥 Remove unwanted duplicate UI */
+.shaka-mute-button,
+.shaka-volume-bar-container,
+.shaka-pip-button,
+.shaka-overflow-menu-button,
+.shaka-resolution-button,
+.shaka-back-to-overflow-button {
+  display:none !important;
+}
+
+/* Remove top/extra bars if any */
+.shaka-top-controls {
+  display:none !important;
+}
 </style>
 
 </head>
@@ -61,55 +81,40 @@ const video = document.getElementById('video');
 
 async function initializePlayer() {
   try {
-    // Initialize Shaka Player
     player = new shaka.Player();
     await player.attach(video);
 
     const container = document.querySelector('.shaka-video-container');
     const ui = new shaka.ui.Overlay(player, container, video);
 
-    const config={
+    const config = {
+      addSeekBar: false,
+      controlPanelElements: [
+        'play_pause',
+        'time_and_duration',
+        'spacer',
+        'fullscreen'
+      ]
+    };
 
-addSeekBar:false,
+    ui.configure(config);
 
-controlPanelElements:[
-'play_pause',
-'mute',
-'time_and_duration',
-'restart',
-'spacer',
-'picture_in_picture',
-'fullscreen'
-]
-
-};
-
-ui.configure(config);
-
-
-/* PLAYER CONFIG */
-
-player.configure({
-
-streaming:{
-bufferingGoal:10,
-rebufferingGoal:2,
-bufferBehind:30
-},
-
-manifest:{
-retryParameters:{
-timeout:30000,
-maxAttempts:2,
-baseDelay:1000,
-backoffFactor:2,
-fuzzFactor:0.5
-}
-
-}
-
-});
-
+    player.configure({
+      streaming:{
+        bufferingGoal:10,
+        rebufferingGoal:2,
+        bufferBehind:30
+      },
+      manifest:{
+        retryParameters:{
+          timeout:30000,
+          maxAttempts:2,
+          baseDelay:1000,
+          backoffFactor:2,
+          fuzzFactor:0.5
+        }
+      }
+    });
 
     video.autoplay = true;
     video.controls = false;
@@ -117,23 +122,14 @@ fuzzFactor:0.5
     video.muted = false;
     video.preload = 'auto';
 
-    console.log(`Loading stream: ${channelstreamInfo.streamUrl}`);
-
-    // Load stream
     await player.load(channelstreamInfo.streamUrl);
-
-    console.log('Stream loaded successfully.');
 
     const attemptAutoplay = async () => {
       try {
         await video.play();
-      } catch (playError) {
+      } catch {
         video.muted = true;
-        try {
-          await video.play();
-        } catch (mutedError) {
-          console.log('User interaction required');
-        }
+        await video.play();
       }
     };
 
@@ -144,9 +140,6 @@ fuzzFactor:0.5
     }
 
   } catch (error) {
-    console.error('Error initializing player:', error);
-
-    // Fallback (same logic)
     video.src = channelstreamInfo.streamUrl;
     video.autoplay = true;
     video.muted = false;
@@ -160,7 +153,6 @@ fuzzFactor:0.5
   }
 }
 
-// Init
 document.addEventListener('DOMContentLoaded', () => {
   initializePlayer();
 });
