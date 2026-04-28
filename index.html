@@ -25,8 +25,8 @@ body{background:#000;}
 
 <script>
 
-const DATA_URL = "https://raw.githubusercontent.com/doctor-8trange/zyphx8/refs/heads/main/data/fancode.json";
-const PLAY_BASE = "https://fancodebyfinally.pages.dev/fancodeplayer?url=";
+const DATA_URL = "YOUR_JSON_URL_HERE";
+const PLAY_BASE = "player.html?url=";
 
 const container = document.getElementById("matches");
 
@@ -44,16 +44,17 @@ fetch(DATA_URL)
 
 let matches = data.matches || [];
 
-/* SORT LIVE FIRST */
+/* 🔥 SORT: STREAMING FIRST */
 matches.sort((a,b)=>{
-  const aLive = (a.status||"").toUpperCase()==="LIVE";
-  const bLive = (b.status||"").toUpperCase()==="LIVE";
+  const aLive = (a.streamingStatus||"").toUpperCase()==="STARTED";
+  const bLive = (b.streamingStatus||"").toUpperCase()==="STARTED";
   return (bLive?1:0)-(aLive?1:0);
 });
 
 matches.forEach(match=>{
 
-const isLive = (match.status||"").toUpperCase()==="LIVE";
+/* 🔥 FIX: USE streamingStatus */
+const isLive = (match.streamingStatus||"").toUpperCase()==="STARTED";
 
 /* IMAGE FIX */
 const imgSrc =
@@ -66,17 +67,17 @@ const imgSrc =
 const t1 = match.team?.[0];
 const t2 = match.team?.[1];
 
-const teamLine = t1 && t2 ? `${t1.name} vs ${t2.name}` : match.title;
+const teamLine = t1 && t2 ? `${t1.shortName} vs ${t2.shortName}` : match.title;
 
 /* CARD */
 const card = document.createElement("div");
-card.className = `rounded-2xl overflow-hidden shadow-xl border border-gray-800 ${isLive?"ring-2 ring-red-600":""}`;
+card.className = `rounded-2xl overflow-hidden shadow-xl border border-gray-800 match-card ${isLive?"ring-2 ring-red-600":""}`;
 
 /* HEADER */
 card.innerHTML = `
 <div class="relative">
-<img src="${imgSrc}" class="w-full h-52 object-cover">
-${isLive ? `<span class="absolute top-3 left-3 bg-red-600 px-3 py-1 rounded-full text-xs">LIVE</span>` : ""}
+<img src="${imgSrc}" class="w-full h-52 object-cover object-top">
+${isLive ? `<span class="absolute top-3 left-3 bg-red-600 px-3 py-1 rounded-full text-xs live-badge">LIVE</span>` : ""}
 </div>
 `;
 
@@ -99,8 +100,6 @@ btnWrap.className = "grid grid-cols-2 gap-2 mt-3 hidden";
 if(isLive && match.auto_streams?.length){
 
 const master = match.auto_streams[0].auto;
-
-/* EXTRACT URLS */
 const lines = master.split("\n");
 
 for(let i=0;i<lines.length;i++){
