@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ios Stream By @Finally_Live_Streaming</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta name="referrer" content="no-referrer">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.css">
+
+  <style>
+    body {
+      background: #000;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    html, body {
+      height: 100%;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+    }
+    .plyr {
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+<video id="player" autoplay muted controls playsinline></video>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.1.4/dist/hls.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js"></script>
+<script>
+if (confirm("Join Our Telegram Channel @Finally_Live_Streaming")) {
+  window.open("https://telegram.me/Finally_Live_Streaming", '_blank');
+}
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  const video = document.getElementById('player');
+
+  // ✅ ADD YOUR STREAMS HERE
+  const streams = {
+    WS: "https://amg01269-amg01269c1-sportstribal-emea-5204.playouts.now.amagi.tv/playlist/amg01269-willowtvfast-willowplus-sportstribalemea/playlist.m3u8",
+    M2: "https://example.com/stream2.m3u8",
+    M3: "https://example.com/stream3.m3u8"
+    // Add more like:
+    // M4: "link",
+    // M5: "link"
+  };
+
+  // ✅ GET ID FROM URL
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  const source = streams[id] || streams["M1"]; // default M1
+
+  if (Hls.isSupported()) {
+
+    const hls = new Hls({
+      maxBufferLength: 30,
+      maxMaxBufferLength: 60,
+      liveSyncDuration: 5,
+      liveMaxLatencyDuration: 10
+    });
+
+    hls.loadSource(source);
+    hls.attachMedia(video);
+
+    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+
+      const qualities = hls.levels.map(l => l.height);
+
+      new Plyr(video, {
+        controls: ['play-large','play','mute','volume','settings','fullscreen'],
+        quality: {
+          default: qualities[0],
+          options: qualities,
+          forced: true,
+          onChange: (q) => {
+            hls.levels.forEach((level, i) => {
+              if (level.height === q) {
+                hls.currentLevel = i;
+              }
+            });
+          }
+        }
+      });
+
+      video.play();
+    });
+
+  } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+
+    video.src = source;
+    new Plyr(video);
+
+  } else {
+    document.body.innerHTML = "<h2 style='color:white;text-align:center;'>HLS not supported</h2>";
+  }
+
+  // ✅ FULLSCREEN LANDSCAPE LOCK
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) {
+      screen.orientation?.lock('landscape').catch(()=>{});
+    } else {
+      screen.orientation?.unlock?.();
+    }
+  });
+
+});
+</script>
+
+</body>
+</html>
