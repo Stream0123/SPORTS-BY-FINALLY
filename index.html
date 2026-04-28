@@ -22,7 +22,11 @@ body{background:#000;}
 <h1 class="text-center text-2xl font-bold mb-6">FANCODE LIVE</h1>
 
 <div id="matches" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
-
+<script>
+if (confirm("Join Our Telegram Channel @Finally_Live_Streaming")) {
+  window.open("https://telegram.me/Finally_Live_Streaming", '_blank');
+}
+</script>
 <script>
 
 const DATA_URL = "https://raw.githubusercontent.com/doctor-8trange/zyphx8/refs/heads/main/data/fancode.json";
@@ -67,7 +71,7 @@ const imgSrc =
 const t1 = match.team?.[0];
 const t2 = match.team?.[1];
 
-const teamLine = t1 && t2 ? `${t1.shortName} vs ${t2.shortName}` : match.title;
+const teamLine = t1 && t2 ? `${t1.name} vs ${t2.name}` : match.title;
 
 /* CARD */
 const card = document.createElement("div");
