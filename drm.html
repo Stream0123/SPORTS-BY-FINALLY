@@ -65,11 +65,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   const video = document.querySelector('video');
+  const container = document.querySelector('.shaka-video-container');
 
-  // ⚠️ IMPORTANT: use auto UI player
-  const player = video['shakaPlayer'];
+  // ✅ Correct way to access player
+  const ui = container['ui'];
+  const controls = ui.getControls();
+  const player = controls.getPlayer();
 
-  // 🔥 GET STREAM ID
+  // 🔥 GET ID
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
@@ -80,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const stream = STREAMS[id];
 
-  // 🔥 KEEP FULL UI SETTINGS (NO REMOVAL)
+  // ✅ Apply DRM BEFORE load
   player.configure({
     drm: {
       clearKeys: {
@@ -91,19 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       lowLatencyMode: true,
       bufferingGoal: 15,
       rebufferingGoal: 2,
-      bufferBehind: 15,
-      retryParameters: {
-        timeout: 10000,
-        maxAttempts: 5,
-        baseDelay: 300,
-        backoffFactor: 1.2
-      }
-    },
-    manifest: {
-      retryParameters: {
-        timeout: 8000,
-        maxAttempts: 3
-      }
+      bufferBehind: 15
     }
   });
 
