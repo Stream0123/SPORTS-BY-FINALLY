@@ -1,115 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Player By  @Finally_Live_Streaming</title>
+  <title>Stream By @Finally_Live_Streaming</title>
+  <meta charset="UTF-8">
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.11/shaka-player.ui.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.11/controls.min.css">
+  <!-- Shaka Player -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.8.8/shaka-player.ui.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.9.3/controls.min.css" rel="stylesheet">
 
-<style>
-html, body {
-  margin:0;
-  height:100%;
-  background:#000;
-  overflow:hidden;
-}
+  <!-- External Streams -->
+  <script src="streams.js"></script>
 
-.shaka-video-container {
-  position:absolute;
-  inset:0;
-}
-
-video {
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-
-/* hide spinner only */
-.shaka-spinner-container,
-.shaka-spinner,
-.shaka-spinner-svg {
-  display:none !important;
-}
-</style>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ⚠️ KEEP AUTO UI (IMPORTANT) -->
-<div class="shaka-video-container"
-     data-shaka-player
-     data-shaka-player-container
-     shaka-controls="true">
-
-  <video autoplay playsinline preload="metadata" class="shaka-video"></video>
-
+<div data-shaka-player-container style="width:100%; height:100vh;">
+  <video autoplay playsinline data-shaka-player id="video"></video>
 </div>
-
-<script src="mpdstream.js"></script>
 <script>
 if (confirm("Join Our Telegram Channel @Finally_Live_Streaming")) {
   window.open("https://telegram.me/Finally_Live_Streaming", '_blank');
 }
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
 
-  shaka.polyfill.installAll();
 
-  if (!shaka.Player.isBrowserSupported()) {
-    alert("Browser not supported");
-    return;
-  }
+/* Get stream ID from URL */
+function getStreamId() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("id") || "M1";
+}
 
-  const video = document.querySelector('video');
-  const container = document.querySelector('.shaka-video-container');
-
-  // ✅ Correct way to access player
-  const ui = container['ui'];
+async function init() {
+  const video = document.getElementById('video');
+  const ui = video['ui'];
   const controls = ui.getControls();
   const player = controls.getPlayer();
 
-  // 🔥 GET ID
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+  const streamId = getStreamId();
+  const stream = STREAMS[streamId];
 
-  if (!id || !STREAMS[id]) {
-    alert("Invalid stream ID");
+  if (!stream) {
+    alert("Invalid Stream ID!");
     return;
   }
 
-  const stream = STREAMS[id];
+  /* Set Poster */
+  video.poster = stream.poster || "";
 
-  // ✅ Apply DRM BEFORE load
+  /* UI Config */
+  ui.configure({
+    controlPanelElements: [
+      'play_pause',
+      'time_and_duration',
+      'spacer',
+      'mute',
+      'volume',
+      'picture_in_picture',
+      'playback_rate',
+      'quality',
+      'fullscreen'
+    ],
+    playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
+  });
+
+  /* DRM Config from external file */
   player.configure({
     drm: {
       clearKeys: {
         [stream.keyId]: stream.key
       }
-    },
-    streaming: {
-      lowLatencyMode: true,
-      bufferingGoal: 15,
-      rebufferingGoal: 2,
-      bufferBehind: 15
     }
   });
 
-  player.addEventListener('error', e => {
-    console.error('Error:', e.detail);
-  });
+  /* Error Handling */
+  player.addEventListener('error', e => console.error("Player Error:", e));
+  controls.addEventListener('error', e => console.error("UI Error:", e));
 
+  /* Load Stream */
   try {
     await player.load(stream.mpd);
-    console.log("Loaded:", id);
-  } catch (err) {
-    console.error("Load failed:", err);
+    console.log("Loaded stream:", streamId);
+  } catch (error) {
+    console.error("Load failed:", error);
   }
+}
 
-});
+/* Init Player */
+document.addEventListener('shaka-ui-loaded', init);
+document.addEventListener('shaka-ui-load-failed', e => console.error(e));
+
 </script>
 
 </body>
