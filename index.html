@@ -136,14 +136,14 @@ fetch(apiURL)
         const card = document.createElement('div');
         card.className = 'match-item';
 
-        const team1 = match.team?.[0]?.shortName || '';
-        const team2 = match.team?.[1]?.shortName || '';
+        const team1 = match.team?.[0]?.name || '';
+        const team2 = match.team?.[1]?.name || '';
 
         card.innerHTML = `
             <img src="${match.image}">
             <h3>${match.tournament}</h3>
             <p>${team1} vs ${team2}</p>
-            <p>${match.status}</p>
+            <p>${match.streamingStatus}</p>
             <button class="watch-btn">▶ Watch Now</button>
         `;
 
