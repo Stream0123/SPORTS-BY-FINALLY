@@ -26,19 +26,30 @@ video {
   height:100%;
   object-fit:contain;
 }
+
+/* hide spinner only */
+.shaka-spinner-container,
+.shaka-spinner,
+.shaka-spinner-svg {
+  display:none !important;
+}
 </style>
 </head>
 
 <body>
 
-<div class="shaka-video-container">
-  <video id="video" autoplay playsinline></video>
+<!-- ⚠️ KEEP AUTO UI (IMPORTANT) -->
+<div class="shaka-video-container"
+     data-shaka-player
+     data-shaka-player-container
+     shaka-controls="true">
+
+  <video autoplay playsinline preload="metadata" class="shaka-video"></video>
+
 </div>
 
 <script src="mpdstream.js"></script>
-
-
-  <script>
+<script>
 if (confirm("Join Our Telegram Channel @Finally_Live_Streaming")) {
   window.open("https://telegram.me/Finally_Live_Streaming", '_blank');
 }
@@ -53,22 +64,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  const video = document.getElementById("video");
-  const player = new shaka.Player(video);
+  const video = document.querySelector('video');
 
-  const container = document.querySelector('.shaka-video-container');
-  const ui = new shaka.ui.Overlay(player, container, video);
+  // ⚠️ IMPORTANT: use auto UI player
+  const player = video['shakaPlayer'];
 
-  ui.configure({
-    controlPanelElements: [
-      'play_pause',
-      'time_and_duration',
-      'spacer',
-      'fullscreen'
-    ]
-  });
-
-  // 🔥 GET ID FROM URL
+  // 🔥 GET STREAM ID
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
@@ -79,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const stream = STREAMS[id];
 
-  // 🔥 DRM CONFIG FROM JS FILE
+  // 🔥 KEEP FULL UI SETTINGS (NO REMOVAL)
   player.configure({
     drm: {
       clearKeys: {
@@ -90,15 +91,31 @@ document.addEventListener('DOMContentLoaded', async () => {
       lowLatencyMode: true,
       bufferingGoal: 15,
       rebufferingGoal: 2,
-      bufferBehind: 15
+      bufferBehind: 15,
+      retryParameters: {
+        timeout: 10000,
+        maxAttempts: 5,
+        baseDelay: 300,
+        backoffFactor: 1.2
+      }
+    },
+    manifest: {
+      retryParameters: {
+        timeout: 8000,
+        maxAttempts: 3
+      }
     }
+  });
+
+  player.addEventListener('error', e => {
+    console.error('Error:', e.detail);
   });
 
   try {
     await player.load(stream.mpd);
-    console.log("Stream loaded:", id);
-  } catch (e) {
-    console.error("Error:", e);
+    console.log("Loaded:", id);
+  } catch (err) {
+    console.error("Load failed:", err);
   }
 
 });
