@@ -5,10 +5,10 @@ const STREAMS = {
     key: "b748836c71e6a4ca68ef5b5652db6247",
     poster: "#"
   },
-  cricbuzz: {
-    mpd: "https://ev-fast-mpd.starzplayarabia.com/live/eds/CricLife1/DASH/CricLife1.mpd",
-    keyId: "1e23e51b09a67b83813c17049870bcd4",
-    key: "c3d6288e378b0dc55320fd0e6fd2e55f",
+  IPL: {
+    mpd: "https://otte.cache.aiv-cdn.net/bom-nitro/live/clients/dash/enc/azwuqtlxfr/out/v1/78eb78ea2c374576ba1ff8a6df562586/cenc.mpd",
+    keyId: "50195344b760466888f9086d43b639b4",
+    key: "97497ea2d101d957f291271247c53cdf",
     poster: "#"
   }
 };
