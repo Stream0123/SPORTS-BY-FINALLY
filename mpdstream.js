@@ -1,8 +1,8 @@
 const STREAMS = {
   willow: {
-    mpd: "https://otte.cache.aiv-cdn.net/bom-nitro/live/clients/dash/enc/tll6uwepxa/out/v1/a7f67cbb33df46539312956427343886/cenc.mpd",
-    keyId: "290e09c837da78d5cd961978d390515c",
-    key: "b748836c71e6a4ca68ef5b5652db6247",
+    mpd: "https://otte.cache.aiv-cdn.net/iad-nitro/live/clients/dash/enc/v8smvlfeeg/out/v1/d635ebb97da7408badbcb0fc7f448e41/cenc.mpd",
+    keyId: "3e413afe9c10e7ddacdbf33945b81e3a",
+    key: "35035b1bf86353e3cd53689cc0058234",
     poster: "#"
   },
   IPL: {
