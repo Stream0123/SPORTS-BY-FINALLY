@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Astro Cricket HD</title>
+  <title>FanCode Live</title>
   <meta charset="UTF-8">
 
-  <!-- ✅ IMPORTANT FIX -->
+  <!-- ✅ IMPORTANT -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +13,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.9.3/controls.min.css" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-      background: black;
-    }
+    body { margin: 0; background: black; }
   </style>
 </head>
 
@@ -24,18 +21,13 @@
 
 <center>
   <div data-shaka-player-container style="width:100%; height:100%;">
-    <video
-      poster="https://linear-poster.astro.com.my/prod/poster/Astro-Cricket_2024_IVP_LAND_917x516.jpg"
-      autoplay
-      data-shaka-player
-      id="video"
-      style="width:100%; height:100%;">
-    </video>
+    <video autoplay data-shaka-player id="video" style="width:100%; height:100%;"></video>
   </div>
 </center>
 
 <script>
-const manifestUri = 'https://in-mc-flive.fancode.com/mumbai/140503_english_dash_85873_1drmta-di_h264/index.mpd';
+const manifestUri =
+'https://in-mc-flive.fancode.com/mumbai/140503_english_dash_85873_1drmta-di_h264/index.mpd';
 
 async function init() {
 
@@ -44,59 +36,64 @@ async function init() {
   const controls = ui.getControls();
   const player = controls.getPlayer();
 
-  // UI CONFIG
+  // 🎛️ UI CONFIG
   ui.configure({
     controlPanelElements: [
-      'play_pause', 'time_and_duration', 'spacer',
-      'mute', 'picture_in_picture',
-      'playback_rate', 'quality', 'fullscreen'
+      'play_pause','time_and_duration','spacer',
+      'mute','picture_in_picture',
+      'playback_rate','quality','fullscreen'
     ],
-    playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 2]
+    playbackRates: [0.75, 1, 1.25, 1.5, 2]
   });
 
-  // DRM KEYS
+  // 🔐 DRM + BUFFER
   player.configure({
     drm: {
       clearKeys: {
-        '5a6854fbfff84c1681f765ba455bf4d5': '8d39328cb222196ca8edb558ca9ce192'
+        '5a6854fbfff84c1681f765ba455bf4d5':
+        '8d39328cb222196ca8edb558ca9ce192'
       }
     },
-
-    // 🔥 BUFFER FIX (anti-freeze)
     streaming: {
-      bufferingGoal: 30,
-      rebufferingGoal: 15,
-      bufferBehind: 30
+      bufferingGoal: 25,
+      rebufferingGoal: 10,
+      bufferBehind: 20
     }
   });
 
-  // ✅ HEADERS INJECTION
+  // ✅ HEADERS BEFORE MPD LOAD
   player.getNetworkingEngine().registerRequestFilter((type, request) => {
 
-    request.headers['Referer'] = 'https://fancode.com/';
-    request.headers['Origin'] = 'https://fancode.com';
+    // Apply ONLY where needed
+    if (
+      type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
+      type === shaka.net.NetworkingEngine.RequestType.SEGMENT
+    ) {
+      request.headers['Referer'] = 'https://fancode.com/';
+      request.headers['Origin']  = 'https://fancode.com';
+    }
 
-    // ⚠️ USER-AGENT (may not work in browser)
+    // ⚠️ Browser may ignore this
     request.headers['User-Agent'] =
       'ReactNativeVideo/9.3.0 (Linux;Android 13) AndroidXMedia3/1.6.1';
-
   });
 
-  // ERROR HANDLING
-  player.addEventListener('error', e => console.error(e));
-  controls.addEventListener('error', e => console.error(e));
+  // ❗ ERROR HANDLING
+  player.addEventListener('error', e => console.error('PLAYER ERROR:', e.detail));
+  controls.addEventListener('error', e => console.error('UI ERROR:', e.detail));
 
+  // 🚀 LOAD MPD
   try {
     await player.load(manifestUri);
-    console.log("✅ Video loaded");
-  } catch (error) {
-    console.error("❌ Load failed", error);
+    console.log("✅ Stream started");
+  } catch (err) {
+    console.error("❌ Load failed", err);
   }
 }
 
 document.addEventListener('shaka-ui-loaded', init);
 document.addEventListener('shaka-ui-load-failed', () => {
-  console.error('Shaka UI failed to load');
+  console.error('Shaka UI failed');
 });
 </script>
 
