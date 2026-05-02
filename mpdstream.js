@@ -6,9 +6,9 @@ const STREAMS = {
     poster: "#"
   },
   IPL: {
-    mpd: "https://otte.cache.aiv-cdn.net/bom-nitro/live/clients/dash/enc/pctpgbah9u/out/v1/64d404d6e5d0400d98304d1b072f07af/cenc.mpd",
-    keyId: "ccae37ad757aae3ceaf58650c24f13dd",
-    key: "9da8eab9d12286702014c30a49cd9b51",
+    mpd: "https://otte.cache.aiv-cdn.net/iad-nitro/live/clients/dash/enc/kdtysddt3h/out/v1/8a7efdb4fd4746758d9d631fd6252bc4/cenc.mpd",
+    keyId: "853f3648541578a64d73665594568d2a",
+    key: "9f5a98e26094f397d1d7cefd41d1ebfc",
     poster: "#"
   }
 };
