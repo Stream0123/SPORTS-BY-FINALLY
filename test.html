@@ -46,25 +46,46 @@ async function init() {
     playbackRates: [0.75, 1, 1.25, 1.5, 2]
   });
 
-  // 🔐 DRM + BUFFER
+  // 🔐 PLAYER CONFIG (BUFFER + DRM + RETRY)
   player.configure({
+
     drm: {
       clearKeys: {
         '5a6854fbfff84c1681f765ba455bf4d5':
         '8d39328cb222196ca8edb558ca9ce192'
       }
     },
+
     streaming: {
-      bufferingGoal: 25,
-      rebufferingGoal: 10,
-      bufferBehind: 20
+      bufferingGoal: 15,
+      rebufferingGoal: 3,
+      bufferBehind: 25,
+
+      // 🔥 Anti-freeze
+      lowLatencyMode: true,
+      jumpLargeGaps: true,
+      inaccurateManifestTolerance: 2,
+
+      stallEnabled: true,
+      stallThreshold: 5,
+      stallSkip: 0.1
+    },
+
+    manifest: {
+      retryParameters: {
+        timeout: 30000,
+        maxAttempts: 3,
+        baseDelay: 1000,
+        backoffFactor: 2,
+        fuzzFactor: 0.5
+      }
     }
+
   });
 
-  // ✅ HEADERS BEFORE MPD LOAD
+  // ✅ HEADERS INJECTION (BEFORE LOAD)
   player.getNetworkingEngine().registerRequestFilter((type, request) => {
 
-    // Apply ONLY where needed
     if (
       type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
       type === shaka.net.NetworkingEngine.RequestType.SEGMENT
@@ -73,7 +94,7 @@ async function init() {
       request.headers['Origin']  = 'https://fancode.com';
     }
 
-    // ⚠️ Browser may ignore this
+    // ⚠️ May be ignored in browser
     request.headers['User-Agent'] =
       'ReactNativeVideo/9.3.0 (Linux;Android 13) AndroidXMedia3/1.6.1';
   });
@@ -82,7 +103,16 @@ async function init() {
   player.addEventListener('error', e => console.error('PLAYER ERROR:', e.detail));
   controls.addEventListener('error', e => console.error('UI ERROR:', e.detail));
 
-  // 🚀 LOAD MPD
+  // 🎥 VIDEO SETTINGS
+  video.autoplay = true;
+  video.controls = false;
+  video.volume = 1;
+  video.muted = false;
+  video.preload = 'auto';
+
+  console.log("Loading stream:", manifestUri);
+
+  // 🚀 LOAD STREAM
   try {
     await player.load(manifestUri);
     console.log("✅ Stream started");
