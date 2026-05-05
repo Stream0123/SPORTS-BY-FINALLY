@@ -1,8 +1,8 @@
 const STREAMS = {
-  willow: {
-    mpd: "https://a96aivottlinear-a.akamaihd.net/OTTB/iad-nitro/enc/pnjtj597lg/out/v1/b4178959f9234d78bb8f32e0a675bafa/cenc.mpd",
-    keyId: "24583a8b6b908fba097bbb794eabc1a8",
-    key: "f8d5cacb61e361b15aa7c36a74bbe7af",
+  SKY: {
+    mpd: "https://dice-live-oc.akamaized.net/exp=1778049122~acl=%2F*~id=58520b5a-41d2-497e-a43c-3eb9c77dd521~data=hdntl,aXA9MzguMTM3LjIyLjEwMSZleHA9MTc3Nzk2Mjc1MSZlaWQ9ODM3OTE3Jm9pZD0yMiZ0eXBlPVZPRCZ1aWQ9bnVsbCZjaWQ9bnVsbCZwdD1udWxs~hmac=03086baf02d3ec9560986faa3d14e26f5c20e9b04e1f7c71b8ad2b52fbfcab08/dash/live/2093666/294921-318514/manifest-d.mpd",
+    keyId: "4d346b1d1ae64d4a800409cffa14983e",
+    key: "208c972bd2da4359ac94e6944fe378b6",
     poster: "#"
   },
   IPL: {
