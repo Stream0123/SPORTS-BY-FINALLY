@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sandboxed Iframe</title>
+<title>IOS Stream By @Finally_Live_Streaming</title>
 
 <style>
 html,body{
@@ -22,22 +22,34 @@ iframe{
 </style>
 </head>
 <body>
-
+    <script>if (confirm("Join Our Telegram Channel @Finally_Live_Streaming")) {window.location.href = "https://telegram.me/Finally_Live_Streaming";}  </script>
 <iframe
     src="https://streamfree.app/embed/cricket/cricketsky?quality=1080p&category=cricket"
-    
+
     sandbox="
         allow-scripts
-        allow-same-origin
-        allow-forms
-        allow-popups
-        allow-downloads
-        allow-presentation
     "
 
-    allowfullscreen
-    referrerpolicy="no-referrer">
+    referrerpolicy="no-referrer"
+    allowfullscreen>
 </iframe>
+
+<script>
+// BLOCK REDIRECTS
+window.onbeforeunload = function () {
+    return false;
+};
+
+// BLOCK POPUPS
+window.open = function () {
+    return null;
+};
+
+// BLOCK TOP LOCATION CHANGE
+Object.defineProperty(window, 'location', {
+    writable: false
+});
+</script>
 
 </body>
 </html>
